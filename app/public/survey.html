@@ -22,18 +22,18 @@
 
             <h2 class="row">About You</h2>
 
-            <form>
+            <form role="form">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="users_name">Enter your name</label>
-                            <input type="text" class="form-control" id="users_name" placeholder="John Doe">
+                            <label for="users-name">Enter your name</label>
+                            <input type="text" class="form-control" id="users-name" placeholder="John Doe">
                         </div>    
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="users_pic">Enter a link to an image of yourself</label>
-                            <input type="text" class="form-control" id="users_pic" placeholder="http://via.placeholder.com/150x150">
+                            <label for="users-pic">Enter a link to an image of yourself</label>
+                            <input type="text" class="form-control" id="users-pic" placeholder="http://via.placeholder.com/150x150">
                         </div>    
                     </div>
                 </div>
@@ -44,11 +44,11 @@
                             <label for="q1"> Your mind is always buzzing with unexplored ideas and plans.</label>
                             <select placeholder="Select an option" class="form-control col-md-4" id="q1">
                                 <option disabled selected>Choose your option</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
                             </select>
                         </div>     
                     </div>
@@ -59,11 +59,11 @@
                             <label for="q2">Generally speaking, you rely more on your experience than your imagination.</label>
                             <select placeholder="Select an option" class="form-control col-md-4" id="q2">
                                 <option value="" disabled selected>Choose your option</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
                             </select>
                         </div>     
                     </div>
@@ -74,11 +74,11 @@
                             <label for="q3">You find it easy to stay relaxed and focused even when there is some pressure.</label>
                             <select placeholder="Select an option" class="form-control col-md-4" id="q3">
                                 <option value="" disabled selected>Choose your option</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
                             </select>
                         </div>     
                     </div>
@@ -89,11 +89,11 @@
                             <label for="q4">You rarely do something just out of sheer curiosity.</label>
                             <select placeholder="Select an option" class="form-control col-md-4" id="q4">
                                 <option value="" disabled selected>Choose your option</option>
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
                             </select>
                         </div>     
                     </div>
@@ -101,19 +101,16 @@
                 </div>
                 
                 <br>
+                
+                
+            </form> 
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <a href=""><button type="submit" class="btn btn-primary">Submit</button></a>
-                    </div>
-                    
+            <div class="row">
+                <div class="col-md-12">
+                    <a href=""><button id="submit-survey" type="button" class="btn btn-primary">Submit</button></a>
                 </div>
                 
-                
-                
-                    
-
-            </form> 
+            </div>
         </div>
 
         
@@ -126,7 +123,33 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
     
+    <script type="text/javascript">
+
+        // Question: What does this code do?
+        $("#submit-survey").on("click", function() {
+            // event.preventDefault();
+
+            console.log('hello');
+    
+            var newFriend = {
+                name: $("#users-name").val().trim(),
+                photo: $("#users-pic").val().trim(),
+                scores: [$("#q1").val().trim(),$("#q2").val().trim(),$("#q3").val().trim(),$("#q4").val().trim()]
+            };
+    
+            // Question: What does this code do??
+            $.post("/api/friends", newFriend).done(function(err, data) {
+                if (err) throw err;
+                console.log(data);
+                alert("Adding friend...");
+            });
+
+       
+    
+        });
+    </script>
 </body>
 </html>
 
