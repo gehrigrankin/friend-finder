@@ -55,7 +55,7 @@ module.exports = function(app){
         console.log('your bff is: ' + bestfriend.name);
 
     
-        friends.push(newFriend);
+        friends.push(newFriend,bestfriend);
     
         res.json(friends);
     });    

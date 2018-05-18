@@ -107,9 +107,30 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <a href=""><button id="submit-survey" type="button" class="btn btn-primary" data-toggle="modal" data-target="#friendModal" >Submit</button></a>
+                    <button id="submit-survey" type="button" class="btn btn-primary" data-toggle="modal" data-target="#friendModal" >Submit</button>
                 </div>
                 
+            </div>
+
+            <div id="friendModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Your BFF</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <h1 id="bff-name"></h1>
+                            <div id="bff-pic"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
 
             
@@ -126,9 +147,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
     
     <script type="text/javascript">
-
         // Question: What does this code do?
         $("#submit-survey").on("click", function() {
             // event.preventDefault();
@@ -145,10 +166,18 @@
             $.post("/api/friends", newFriend).done(function(err, data) {
                 if (err) throw err;
                 console.log(data);
-                alert("Adding friend...");
             });
+            
+            $.get("/api/friends", function(data){
+                var bestfriend = data[data.length - 1];
 
-        
+                $("#bff-name").html(bestfriend.name);
+                $("#bff-pic").html(
+                    '<img class="img-fluid" src="' + bestfriend.photo + '">'
+                );
+
+            });
+            
     
         });
     </script>
